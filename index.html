@@ -65,38 +65,35 @@
   .folder-stage {
     position: relative;
     width: 100%;
-    padding-top: 24px;
-    /* height driven by folder-front so it scales with content */
+    padding-top: 4vw; /* room for notches — scales with screen */
   }
 
+  /* tabs sit behind the front folder, sized as a fraction of the viewport */
   .tab {
     position: absolute;
-    top: 24px;
-    /* each tab is 30% of the stage, stacked 5% apart from the right */
-    width: 30%;
-    /* height matches folder-front — set via JS on resize */
-    bottom: 0;
-    border-radius: 6px 16px 6px 6px;
+    top: 4vw;
+    width: 35vw;
+    height: 28vw; /* JS will sync this to folder-front actual height */
+    border-radius: 0.5vw 2vw 0.5vw 0.5vw;
   }
 
-  .tab-fk { right: 0;   background: var(--purple);     z-index: 1; }
-  .tab-yk { right: 5%;  background: var(--red);         z-index: 2; }
-  .tab-dk { right: 10%; background: var(--green-dark);  z-index: 2; }
+  .tab-fk { right: 0;     background: var(--purple);    z-index: 1; }
+  .tab-yk { right: 5vw;   background: var(--red);        z-index: 2; }
+  .tab-dk { right: 10vw;  background: var(--green-dark); z-index: 2; }
 
   .folder-front {
     position: relative;
     width: 100%;
-    /* height scales with viewport — tall enough to feel like a folder */
-    height: clamp(160px, 30vw, 280px);
+    height: 28vw; /* scales with screen width — same ratio as the tabs */
+    min-height: 140px;
+    max-height: 380px;
     background-color: var(--green-folder);
-    /* swap in a background-image here once you have art for the front folder */
-    border-radius: 6px 24px 24px 24px;
+    border-radius: 0.5vw 3vw 3vw 3vw;
     z-index: 3;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
-    padding: 1.5rem 2rem;
-    margin-top: 0;
+    padding: clamp(1rem, 3vw, 2rem);
   }
 
   .folder-welcome {
@@ -105,16 +102,16 @@
   }
 
   .folder-welcome p { margin: 0; }
-  .folder-welcome .line-1 { font-size: clamp(0.85rem, 2vw, 1.2rem); font-weight: 400; }
-  .folder-welcome .line-2 { font-size: clamp(1.1rem, 3vw, 1.8rem); font-weight: 500; font-style: italic; }
+  .folder-welcome .line-1 { font-size: clamp(0.75rem, 2vw, 1.2rem); font-weight: 400; }
+  .folder-welcome .line-2 { font-size: clamp(1rem, 3.5vw, 2rem); font-weight: 500; font-style: italic; }
 
   .notch {
     position: absolute;
-    top: -24px;
-    right: 5%;
-    width: clamp(52px, 10%, 90px);
-    height: 34px;
-    border-radius: 14px 8px 0 0;
+    top: -4vw;
+    right: 2vw;
+    width: clamp(44px, 8vw, 90px);
+    height: clamp(24px, 3.5vw, 40px);
+    border-radius: 2vw 1vw 0 0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -125,7 +122,7 @@
 
   .notch span {
     color: #fff;
-    font-size: 13px;
+    font-size: clamp(10px, 1.5vw, 14px);
     font-weight: 500;
   }
 
