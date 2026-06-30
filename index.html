@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The STEMM Archives</title>
+<style>
+  :root {
+    --green-dark: #2f6b45;
+    --green-folder: #8fb89c;
+    --green-mid: #c5efd2;
+    --green-light: #b6e8a9;
+    --red: #c33a3a;
+    --purple: #5a4fcf;
+    --pill-light: #7fbf7f;
+    --pill-dark: #3f6b4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Nunito', Arial, sans-serif;
+    color: #1a1a1a;
+    overflow-x: hidden;
+  }
+
+  section {
+    width: 100%;
+    padding: 2rem 2.5rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* ===== Section 1: header + folder hero ===== */
+  .section-1 {
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 999px;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
+    color: #fff;
+    background: var(--pill-dark);
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+
+  .btn:hover { opacity: 0.9; }
+
+  .folder-stage {
+    position: relative;
+    width: 100%;
+    min-height: 280px;
+    padding-top: 24px; /* room for notches poking above the tabs */
+  }
+
+  .tab {
+    position: absolute;
+    top: 24px;
+    width: min(280px, 70%);
+    height: 230px;
+    border-radius: 6px 16px 6px 6px;
+  }
+
+  .tab-fk { right: 0;    background: var(--purple);    z-index: 1; }
+  .tab-yk { right: 70px; background: var(--red);        z-index: 2; }
+  .tab-dk { right: 140px; background: var(--green-dark); z-index: 3; }
+
+  .folder-front {
+    position: absolute;
+    left: 0;
+    top: 24px;
+    width: 100%;
+    height: 220px;
+    background-color: var(--green-folder);
+    /* swap in a background-image here once you have art for the front folder */
+    border-radius: 6px 24px 24px 24px;
+    z-index: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 1.5rem 2rem;
+  }
+
+  .folder-welcome {
+    text-align: right;
+    color: #f4f4f0;
+  }
+
+  .folder-welcome p { margin: 0; }
+  .folder-welcome .line-1 { font-size: 1.1rem; font-weight: 400; }
+  .folder-welcome .line-2 { font-size: 1.6rem; font-weight: 500; font-style: italic; }
+
+  .notch {
+    position: absolute;
+    top: -24px;
+    right: 24px;
+    width: 80px;
+    height: 34px;
+    border-radius: 14px 8px 0 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-family: inherit;
+  }
+
+  .notch span {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .notch-fk { background: var(--purple); }
+  .notch-yk { background: var(--red); }
+  .notch-dk { background: var(--green-dark); z-index: 4; }
+
+  /* ===== Sections 2 and 3: content bands ===== */
+  .section-2 { background-color: var(--green-mid); min-height: 200px; }
+  .section-3 { background-color: var(--green-light); min-height: 200px; }
+
+  /* ===== Section 4: dark section with compliment button ===== */
+  .section-4 {
+    background-color: #000;
+    min-height: 220px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .btn-compliment {
+    background: var(--pill-light);
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+  }
+
+  /* ===== Section 5: closing area ===== */
+  .section-5 { background-color: #fff; min-height: 120px; }
+
+  /* ===== Slide-up overlay pages ===== */
+  .page-overlay {
+    position: fixed;
+    inset: 0;
+    background: #fafafa;
+    transform: translateY(100%);
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 100;
+    overflow-y: auto;
+    padding: 2rem;
+  }
+
+  .page-overlay.is-open { transform: translateY(0); }
+
+  .page-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+  <section class="section-1">
+    <div class="header-buttons">
+      <button class="btn">Glaze submissions</button>
+      <button class="btn">Incognito</button>
+    </div>
+
+    <div class="folder-stage">
+      <div class="tab tab-fk">
+        <button class="notch notch-fk" data-target="page-fk" aria-label="Open FK page">
+          <span>FK</span>
+        </button>
+      </div>
+
+      <div class="tab tab-yk">
+        <button class="notch notch-yk" data-target="page-yk" aria-label="Open YK page">
+          <span>YK</span>
+        </button>
+      </div>
+
+      <div class="tab tab-dk">
+        <button class="notch notch-dk" data-target="page-dk" aria-label="Open DK page">
+          <span>DK</span>
+        </button>
+      </div>
+
+      <div class="folder-front">
+        <div class="folder-welcome">
+          <p class="line-1">welcome to the</p>
+          <p class="line-2">STEMM Archives</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add a background-image to each section below once your photos are ready -->
+  <section class="section-2"></section>
+
+  <section class="section-3"></section>
+
+  <section class="section-4">
+    <button class="btn btn-compliment">Post a compliment</button>
+  </section>
+
+  <section class="section-5"></section>
+
+  <!-- Slide-up pages: give each one real content, then wire up its own background-image -->
+  <div class="page-overlay" id="page-dk">
+    <button class="page-close" data-close aria-label="Close">&times;</button>
+    <h1>DK</h1>
+    <p>Page content goes here.</p>
+  </div>
+
+  <div class="page-overlay" id="page-yk">
+    <button class="page-close" data-close aria-label="Close">&times;</button>
+    <h1>YK</h1>
+    <p>Page content goes here.</p>
+  </div>
+
+  <div class="page-overlay" id="page-fk">
+    <button class="page-close" data-close aria-label="Close">&times;</button>
+    <h1>FK</h1>
+    <p>Page content goes here.</p>
+  </div>
+
+  <script>
+    document.querySelectorAll('.notch').forEach(function (notch) {
+      notch.addEventListener('click', function () {
+        var targetId = notch.getAttribute('data-target');
+        var overlay = document.getElementById(targetId);
+        if (overlay) overlay.classList.add('is-open');
+      });
+    });
+
+    document.querySelectorAll('[data-close]').forEach(function (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        closeBtn.closest('.page-overlay').classList.remove('is-open');
+      });
+    });
+  </script>
+
+</body>
+</html>
